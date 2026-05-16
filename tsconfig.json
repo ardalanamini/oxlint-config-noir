@@ -43,6 +43,6 @@
 
     // Custom
     "noEmit": true,
-    "allowImportingTsExtensions": true
-  }
+  },
+  "exclude": ["dist"],
 }

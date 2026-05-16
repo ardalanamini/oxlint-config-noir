@@ -12,5 +12,8 @@ pre-commit:
       glob: "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"
       stage_fixed: true
 
+    - name: build
+      run: pnpm run build
+
     - name: type check
       run: pnpm run test:types

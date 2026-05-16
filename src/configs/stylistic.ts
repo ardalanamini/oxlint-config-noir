@@ -1,5 +1,5 @@
 import { defineConfig } from "oxlint";
-import { base } from "./base.ts";
+import { base } from "./base.js";
 
 export const stylistic = defineConfig({
   extends  : [base],

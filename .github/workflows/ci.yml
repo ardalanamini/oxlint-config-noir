@@ -16,8 +16,8 @@ env:
   PNPM_VERSION: 11
 
 jobs:
-  type-check:
-    name: Type check
+  build:
+    name: Build
 
     timeout-minutes: 15
 
@@ -38,10 +38,10 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --frozen-lockfile
 
-      - name: Type check the project
-        run: pnpm test:types
+      - name: Build the project
+        run: pnpm build
 
   lint:
     name: Lint
@@ -75,17 +75,45 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --frozen-lockfile
 
       - name: Check code styles
         run: pnpm lint
+
+  type-check:
+    name: Type check
+
+    timeout-minutes: 15
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6.0.6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Type check the project
+        run: pnpm test:types
 
   ci-summary:
     name: CI Summary
 
     needs:
-      - type-check
+      - build
       - lint
+      - type-check
 
     if: ${{ always() && github.event_name == 'pull_request' }}
 
@@ -93,5 +121,5 @@ jobs:
 
     steps:
       - name: Check test matrix status
-        if: ${{ needs.type-check.result != 'success' || needs.lint.result != 'success' }}
+        if: ${{ needs.build.result != 'success' || needs.lint.result != 'success' || needs.type-check.result != 'success' }}
         run: exit 1

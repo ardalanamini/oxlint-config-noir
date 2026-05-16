@@ -47,6 +47,8 @@
     "provenance": true
   },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "pnpm build --watch",
     "lint": "oxlint -c ./oxlint.config.ts --type-aware .",
     "lint:fix": "pnpm lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1",

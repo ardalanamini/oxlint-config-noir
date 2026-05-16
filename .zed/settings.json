@@ -3,36 +3,36 @@
     "JavaScript": {
       "format_on_save": "on",
       "prettier": {
-        "allowed": false
+        "allowed": false,
       },
       "formatter": [
         {
-          "code_action": "source.fixAll.oxc"
-        }
-      ]
+          "code_action": "source.fixAll.oxc",
+        },
+      ],
     },
     "TypeScript": {
       "format_on_save": "on",
       "prettier": {
-        "allowed": false
+        "allowed": false,
       },
       "formatter": [
         {
-          "code_action": "source.fixAll.oxc"
-        }
-      ]
+          "code_action": "source.fixAll.oxc",
+        },
+      ],
     },
     "TSX": {
       "format_on_save": "on",
       "prettier": {
-        "allowed": false
+        "allowed": false,
       },
       "formatter": [
         {
-          "code_action": "source.fixAll.oxc"
-        }
-      ]
-    }
+          "code_action": "source.fixAll.oxc",
+        },
+      ],
+    },
   },
   "file_scan_exclusions": [
     "**/.git",
@@ -44,6 +44,7 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.settings",
-    "**/node_modules"
-  ]
+    "**/node_modules",
+    "dist",
+  ],
 }
