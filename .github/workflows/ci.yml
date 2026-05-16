@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  NODE_VERSION: 26
+  PNPM_VERSION: 11
+
+jobs:
+  type-check:
+    name: Type check
+
+    timeout-minutes: 15
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6.0.6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Type check the project
+        run: pnpm test:types
+
+  lint:
+    name: Lint
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        node-version:
+          - 24
+          - 26
+
+    timeout-minutes: 15
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6.0.6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Check code styles
+        run: pnpm lint
+
+  ci-summary:
+    name: CI Summary
+
+    needs:
+      - type-check
+      - lint
+
+    if: ${{ always() && github.event_name == 'pull_request' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check test matrix status
+        if: ${{ needs.type-check.result != 'success' || needs.lint.result != 'success' }}
+        run: exit 1
