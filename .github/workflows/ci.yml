@@ -43,8 +43,38 @@ jobs:
       - name: Build the project
         run: pnpm build
 
+  type-check:
+    name: Type check
+
+    timeout-minutes: 15
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Pnpm ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6.0.6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Type check the project
+        run: pnpm test:types
+
   lint:
     name: Lint
+
+    needs:
+      - build
 
     strategy:
       matrix:
@@ -77,35 +107,11 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
+      - name: Build the project
+        run: pnpm build
+
       - name: Check code styles
         run: pnpm lint
-
-  type-check:
-    name: Type check
-
-    timeout-minutes: 15
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Use Pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v6.0.6
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
-
-      - name: Type check the project
-        run: pnpm test:types
 
   ci-summary:
     name: CI Summary
