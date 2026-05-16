@@ -1,6 +1,6 @@
 {
   "name": "oxlint-config-noir",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Noir Oxlint shareable config",
   "keywords": [
     "check",
