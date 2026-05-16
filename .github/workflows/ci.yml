@@ -46,6 +46,9 @@ jobs:
   type-check:
     name: Type check
 
+    needs:
+      - build
+
     timeout-minutes: 15
 
     runs-on: ubuntu-latest
@@ -66,6 +69,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
+
+      - name: Build the project
+        run: pnpm build
 
       - name: Type check the project
         run: pnpm test:types
