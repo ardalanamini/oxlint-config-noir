@@ -1,0 +1,25 @@
+version: 2
+
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: github-actions
+    cooldown:
+      default-days: 7
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+    commit-message:
+      prefix: ci(deps)
+
+  # Maintain dependencies for NPM
+  - package-ecosystem: npm
+    cooldown:
+      default-days: 7
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+    versioning-strategy: increase
+    commit-message:
+      prefix: build(deps)
