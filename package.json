@@ -44,7 +44,22 @@
   "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public",
-    "provenance": true
+    "provenance": true,
+    "imports": {
+      "#configs": {
+        "types": "./dist/configs/index.d.ts",
+        "default": "./dist/configs/index.js"
+      },
+      "#config/*": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.js"
+      }
+    }
+  },
+  "imports": {
+    "#src": "./src/index.ts",
+    "#configs": "./src/configs/index.ts",
+    "#config/*": "./src/configs/*.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

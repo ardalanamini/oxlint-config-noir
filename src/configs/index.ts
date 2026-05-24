@@ -1,1 +1,1 @@
-export * from "./recommended.js";
+export * from "#config/recommended";
