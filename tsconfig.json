@@ -43,6 +43,7 @@
 
     // Custom
     "noEmit": true,
+    "noImplicitThis": true,
   },
   "exclude": ["dist"],
 }

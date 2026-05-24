@@ -49,29 +49,30 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "pnpm build --watch",
-    "lint": "oxlint -c ./oxlint.config.ts --type-aware .",
+    "lint": "oxlint -c ./oxlint.config.ts",
     "lint:fix": "pnpm lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "prepare": "is-ci || lefthook install"
   },
+  "peerDependencies": {
+    "oxlint": "^1.66.0"
+  },
   "dependencies": {
     "@stylistic/eslint-plugin": "5.10.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-perfectionist": "5.9.0"
+    "eslint-plugin-perfectionist": "5.9.0",
+    "eslint-plugin-unicorn": "64.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "21.0.1",
     "@commitlint/config-conventional": "21.0.1",
     "@commitlint/types": "21.0.1",
-    "@types/node": "25.8.0",
+    "@types/node": "25.9.1",
     "is-ci": "4.1.0",
-    "lefthook": "2.1.6",
-    "oxlint-tsgolint": "0.22.1",
+    "lefthook": "2.1.8",
+    "oxlint-tsgolint": "0.23.0",
     "typescript": "6.0.3"
-  },
-  "peerDependencies": {
-    "oxlint": "^1.65.0"
   },
   "devEngines": {
     "packageManager": {
