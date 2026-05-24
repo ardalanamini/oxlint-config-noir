@@ -35,50 +35,6 @@ import { defineConfig } from "oxlint";
 import { config } from "oxlint-config-noir";
 
 export default defineConfig({
-  extends: [config.base],
-});
-```
-
-### With [Stylistic](https://eslint.style) support:
-
-```typescript
-import { defineConfig } from "oxlint";
-import { config } from "oxlint-config-noir";
-
-export default defineConfig({
-  extends: [config.stylistic],
-});
-```
-
-### With [Import](https://github.com/import-js/eslint-plugin-import) ordering support:
-
-```typescript
-import { defineConfig } from "oxlint";
-import { config } from "oxlint-config-noir";
-
-export default defineConfig({
-  extends: [config.importJS],
-});
-```
-
-### With `Export` support:
-
-```typescript
-import { defineConfig } from "oxlint";
-import { config } from "oxlint-config-noir";
-
-export default defineConfig({
-  extends: [config.exports],
-});
-```
-
-### With all the configs at once:
-
-```typescript
-import { defineConfig } from "oxlint";
-import { config } from "oxlint-config-noir";
-
-export default defineConfig({
   extends: [config.recommended],
 });
 ```
