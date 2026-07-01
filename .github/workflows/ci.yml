@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v6.0.6
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v6.0.6
@@ -88,7 +88,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v6.0.6
