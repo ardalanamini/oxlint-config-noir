@@ -33,7 +33,7 @@ jobs:
       - ci
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Changelog
         uses: ardalanamini/auto-changelog@v4
@@ -67,7 +67,7 @@ jobs:
       - release
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Pnpm ${{ env.PNPM_VERSION }}
         uses: pnpm/action-setup@v6.0.6
