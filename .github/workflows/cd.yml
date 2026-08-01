@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Changelog
-        uses: ardalanamini/auto-changelog@v4
+        uses: ardalanamini/auto-changelog@v5
         id: changelog
 
       - name: Create Release
