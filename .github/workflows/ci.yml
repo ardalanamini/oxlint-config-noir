@@ -11,10 +11,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
-env:
-  NODE_VERSION: 26
-  PNPM_VERSION: 11
-
 jobs:
   build:
     name: Build
@@ -24,18 +20,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Use Pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v6.0.6
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          version: ${{ env.PNPM_VERSION }}
+          node-version-file: .node-version
 
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
+          cache: true
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
@@ -51,18 +46,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Use Pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v6.0.6
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          version: ${{ env.PNPM_VERSION }}
+          node-version-file: .node-version
 
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
+          cache: true
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
@@ -88,18 +82,17 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Use Pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v6.0.6
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
-          cache: pnpm
+
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          cache: true
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile

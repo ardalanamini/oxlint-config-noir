@@ -2,6 +2,16 @@
   "name": "oxlint-config-noir",
   "version": "1.0.6",
   "description": "Noir Oxlint shareable config",
+  "author": "Ardalan Amini <ardalanamini22@gmail.com> (https://ardalanamini.com/)",
+  "homepage": "https://github.com/ardalanamini/oxlint-config-noir#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ardalanamini/oxlint-config-noir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ardalanamini/oxlint-config-noir/issues"
+  },
+  "license": "MIT",
   "keywords": [
     "check",
     "checker",
@@ -23,25 +33,29 @@
     "validate",
     "verify"
   ],
-  "homepage": "https://github.com/ardalanamini/oxlint-config-noir#readme",
-  "bugs": {
-    "url": "https://github.com/ardalanamini/oxlint-config-noir/issues"
-  },
-  "license": "MIT",
-  "author": "Ardalan Amini <ardalanamini22@gmail.com> (https://ardalanamini.com/)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ardalanamini/oxlint-config-noir.git"
-  },
   "files": [
     "dist",
     "README.md",
     "LICENSE",
     "package.json"
   ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "pnpm build --watch",
+    "lint": "oxlint -c ./oxlint.config.ts",
+    "lint:fix": "pnpm lint --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "prepare": "is-ci || lefthook install"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "imports": {
+    "#src": "./src/index.ts",
+    "#configs": "./src/configs/index.ts",
+    "#config/*": "./src/configs/*.ts"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
@@ -56,22 +70,9 @@
       }
     }
   },
-  "imports": {
-    "#src": "./src/index.ts",
-    "#configs": "./src/configs/index.ts",
-    "#config/*": "./src/configs/*.ts"
-  },
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "build:watch": "pnpm build --watch",
-    "lint": "oxlint -c ./oxlint.config.ts",
-    "lint:fix": "pnpm lint --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:types": "tsc -p ./tsconfig.json --noEmit",
-    "prepare": "is-ci || lefthook install"
-  },
+  "packageManager": "pnpm@11.24.0",
   "peerDependencies": {
-    "oxlint": "^1.66.0"
+    "oxlint": "^1.80.0"
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "5.10.0",
@@ -80,20 +81,13 @@
     "eslint-plugin-unicorn": "64.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.0.1",
-    "@commitlint/config-conventional": "21.0.1",
-    "@commitlint/types": "21.0.1",
-    "@types/node": "25.9.1",
+    "@commitlint/cli": "21.2.2",
+    "@commitlint/config-conventional": "21.2.2",
+    "@commitlint/types": "21.2.0",
+    "@types/node": "26.4.0",
     "is-ci": "4.1.0",
-    "lefthook": "2.1.8",
-    "oxlint-tsgolint": "0.23.0",
-    "typescript": "6.0.3"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.1.1",
-      "onFail": "download"
-    }
+    "lefthook": "2.1.12",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "7.0.2"
   }
 }

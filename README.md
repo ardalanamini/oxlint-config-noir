@@ -35,6 +35,6 @@ import { defineConfig } from "oxlint";
 import { config } from "oxlint-config-noir";
 
 export default defineConfig({
-  extends: [config.recommended],
+  extends: [config.recommended], // or `config.native` for native OXLint rules only (less strict, better performance)
 });
 ```

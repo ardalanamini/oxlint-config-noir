@@ -5,10 +5,6 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
 
-env:
-  NODE_VERSION: 26
-  PNPM_VERSION: 11
-
 jobs:
   ci:
     uses: ./.github/workflows/ci.yml
@@ -33,7 +29,7 @@ jobs:
       - ci
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Changelog
         uses: ardalanamini/auto-changelog@v4
@@ -67,19 +63,18 @@ jobs:
       - release
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Use Pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v6.0.6
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: .node-version
           registry-url: https://registry.npmjs.org/
-          cache: pnpm
+
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          cache: true
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
