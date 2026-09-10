@@ -468,11 +468,10 @@ export const recommended = defineConfig({
         },
       },
     ],
-    "js-plugin-unicorn/better-regex"            : "error",
-    "js-plugin-unicorn/consistent-destructuring": "error",
-    "js-plugin-unicorn/prefer-json-parse-buffer": "error",
-    "js-plugin-unicorn/prefer-switch"           : "error",
-    "js-plugin-unicorn/prevent-abbreviations"   : "error",
+    "js-plugin-unicorn/consistent-destructuring" : "error",
+    "js-plugin-unicorn/consistent-json-file-read": ["error", "buffer"],
+    "js-plugin-unicorn/name-replacements"        : "error",
+    "js-plugin-unicorn/prefer-switch"            : "error",
 
     // "js-plugin-typescript/member-ordering"      : [
     //   "error",

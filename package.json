@@ -45,7 +45,7 @@
     "lint": "oxlint -c ./oxlint.config.ts",
     "lint:fix": "pnpm lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
     "prepare": "is-ci || lefthook install"
   },
   "type": "module",
@@ -70,21 +70,22 @@
       }
     }
   },
-  "packageManager": "pnpm@11.24.0",
+  "packageManager": "pnpm@12.3.4",
   "peerDependencies": {
-    "oxlint": "^1.80.0"
+    "oxlint": "^1.82.0"
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "5.10.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-perfectionist": "5.9.0",
-    "eslint-plugin-unicorn": "64.0.0"
+    "eslint-plugin-perfectionist": "5.11.0",
+    "eslint-plugin-unicorn": "74.0.0",
+    "eslint": "10.10.0"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.2",
     "@commitlint/config-conventional": "21.2.2",
     "@commitlint/types": "21.2.0",
-    "@types/node": "26.4.0",
+    "@types/node": "26.5.0",
     "is-ci": "4.1.0",
     "lefthook": "2.1.12",
     "oxlint-tsgolint": "7.0.2001",

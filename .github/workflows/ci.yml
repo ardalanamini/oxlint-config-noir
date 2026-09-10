@@ -62,7 +62,7 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Type check the project
-        run: pnpm test:types
+        run: pnpm typecheck
 
   lint:
     name: Lint
