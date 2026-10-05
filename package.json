@@ -1,6 +1,6 @@
 {
   "name": "oxlint-config-noir",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Noir Oxlint shareable config",
   "author": "Ardalan Amini <ardalanamini22@gmail.com> (https://ardalanamini.com/)",
   "homepage": "https://github.com/ardalanamini/oxlint-config-noir#readme",
