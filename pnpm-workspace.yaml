@@ -1,2 +1,7 @@
+autoDedupe: true
+
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+
 allowBuilds:
   lefthook: false

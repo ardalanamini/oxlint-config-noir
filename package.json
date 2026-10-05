@@ -35,6 +35,7 @@
   ],
   "files": [
     "dist",
+    "src",
     "README.md",
     "LICENSE",
     "package.json"
@@ -46,6 +47,16 @@
     "lint:fix": "pnpm lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "prepack": "pnpm build",
+    "release": "pnpm version --sign-git-tag --no-commit-hooks",
+    "release:pre": "pnpm release prerelease --preid",
+    "release:major": "pnpm release major",
+    "release:major:pre": "pnpm release premajor --preid",
+    "release:minor": "pnpm release minor",
+    "release:minor:pre": "pnpm release preminor --preid",
+    "release:patch": "pnpm release patch",
+    "release:patch:pre": "pnpm release prepatch --preid",
+    "release:push": "git push --follow-tags",
     "prepare": "is-ci || lefthook install"
   },
   "type": "module",
@@ -70,7 +81,7 @@
       }
     }
   },
-  "packageManager": "pnpm@12.3.4",
+  "packageManager": "pnpm@12.9.1",
   "peerDependencies": {
     "oxlint": "^1.82.0"
   },
@@ -82,13 +93,13 @@
     "eslint-plugin-unicorn": "74.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.2.2",
-    "@commitlint/config-conventional": "21.2.2",
-    "@commitlint/types": "21.2.0",
-    "@types/node": "26.5.0",
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "@commitlint/types": "21.2.3",
+    "@types/node": "26.6.4",
     "is-ci": "4.1.0",
-    "lefthook": "2.1.12",
-    "oxlint-tsgolint": "7.0.2001",
+    "lefthook": "2.1.16",
+    "oxlint-tsgolint": "7.0.2003",
     "typescript": "7.0.2"
   }
 }

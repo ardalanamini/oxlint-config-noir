@@ -2,24 +2,22 @@
   "language_servers": ["!eslint", "!oxfmt", "..."],
   "languages": {
     "JavaScript": {
+      "language_servers": ["!oxfmt", "!eslint", "..."],
       "format_on_save": "on",
       "prettier": {
         "allowed": false,
       },
-      "formatter": [
-        {
-          "code_action": "source.fixAll.oxc",
-        },
-      ],
+      "formatter": [],
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true,
+      },
     },
     "TypeScript": {
       "language_servers": [
-        "!eslint",
         "!oxfmt",
+        "!eslint",
         "!vtsls",
         "!typescript-language-server",
-        "!tailwindcss-language-server",
-        "!json-language-server",
         "typescript-ls",
         "...",
       ],
@@ -27,11 +25,25 @@
       "prettier": {
         "allowed": false,
       },
-      "formatter": [
-        {
-          "code_action": "source.fixAll.oxc",
-        },
-      ],
+      "formatter": [],
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true,
+      },
     },
-  }
+  },
+  "lsp": {
+    "oxlint": {
+      "initialization_options": {
+        "settings": {
+          "configPath": "./oxlint.config.ts",
+          "tsConfigPath": "./tsconfig.json",
+          "typeAware": true,
+          "disableNestedConfig": false,
+          "fixKind": "safe_fix_or_suggestion",
+          "run": "onType",
+          "unusedDisableDirectives": "deny",
+        },
+      },
+    },
+  },
 }

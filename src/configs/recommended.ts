@@ -1,23 +1,26 @@
+import { createRequire } from "node:module";
 import { defineConfig } from "oxlint";
 import { native } from "#config/native";
+
+const resolve = createRequire(import.meta.url).resolve;
 
 export const recommended = defineConfig({
   extends  : [native],
   jsPlugins: [
-    "@stylistic/eslint-plugin",
-    "eslint-plugin-perfectionist",
+    resolve("@stylistic/eslint-plugin"),
+    resolve("eslint-plugin-perfectionist"),
     {
       name     : "js-plugin-import",
-      specifier: "eslint-plugin-import",
+      specifier: resolve("eslint-plugin-import"),
     },
     {
       name     : "js-plugin-unicorn",
-      specifier: "eslint-plugin-unicorn",
+      specifier: resolve("eslint-plugin-unicorn"),
     },
 
     // {
     //   name     : "js-plugin-typescript",
-    //   specifier: "typescript-eslint",
+    //   specifier: resolve("typescript-eslint"),
     // },
   ],
   rules: {
