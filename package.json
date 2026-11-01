@@ -99,7 +99,7 @@
     "@types/node": "26.6.4",
     "is-ci": "4.1.0",
     "lefthook": "2.1.16",
-    "oxlint-tsgolint": "7.0.2003",
+    "oxlint-tsgolint": "7.0.2005",
     "typescript": "7.0.2"
   }
 }
