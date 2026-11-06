@@ -6,44 +6,28 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci.yml
+  changelog:
+    name: Generate Changelog
 
-  release:
-    name: Create Release
-
-    concurrency:
-      group: ${{ github.workflow }}-github-${{ github.ref_name }}
-      cancel-in-progress: true
-
-    environment:
-      name: release
-      url: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+      prerelease: ${{ steps.changelog.outputs.prerelease }}
+      release-id: ${{ steps.changelog.outputs.release-id }}
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
-    needs:
-      - ci
+    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v7
-
       - name: Changelog
-        uses: ardalanamini/auto-changelog@v4
+        uses: ardalanamini/auto-changelog@v5
         id: changelog
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v3
-        with:
-          body: |
-            ${{ steps.changelog.outputs.changelog }}
-          prerelease: ${{ steps.changelog.outputs.prerelease }}
-
-  publish-npm:
+  npm:
     name: Publish to NPM
+
+    needs:
+      - changelog
 
     concurrency:
       group: ${{ github.workflow }}-npm-${{ github.ref_name }}
@@ -59,25 +43,46 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs:
-      - release
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-          registry-url: https://registry.npmjs.org/
-
-      - name: Set up PNPM
-        uses: pnpm/action-setup@v6
+      - name: Setup pnpm with runtime
+        uses: pnpm/setup@v3
         with:
           cache: true
-
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+          require-lockfile: true
 
       - name: Publish the package
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks --tag ${{ needs.changelog.outputs.release-id }}
+
+  release:
+    name: Create Release
+
+    needs:
+      - changelog
+      - npm
+
+    concurrency:
+      group: ${{ github.workflow }}-github-${{ github.ref_name }}
+      cancel-in-progress: true
+
+    environment:
+      name: release
+      url: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 10
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        with:
+          body: |
+            ${{ needs.changelog.outputs.changelog }}
+          prerelease: ${{ needs.changelog.outputs.prerelease }}

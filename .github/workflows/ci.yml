@@ -15,25 +15,18 @@ jobs:
   build:
     name: Build
 
-    timeout-minutes: 15
-
     runs-on: ubuntu-latest
+
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-
-      - name: Set up PNPM
-        uses: pnpm/action-setup@v6
+      - name: Setup pnpm with runtime
+        uses: pnpm/setup@v3
         with:
           cache: true
-
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+          require-lockfile: true
 
       - name: Build the project
         run: pnpm build
@@ -41,25 +34,18 @@ jobs:
   type-check:
     name: Type check
 
-    timeout-minutes: 15
-
     runs-on: ubuntu-latest
+
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-
-      - name: Set up PNPM
-        uses: pnpm/action-setup@v6
+      - name: Setup pnpm with runtime
+        uses: pnpm/setup@v3
         with:
           cache: true
-
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+          require-lockfile: true
 
       - name: Type check the project
         run: pnpm typecheck
@@ -77,25 +63,19 @@ jobs:
           - 24
           - 26
 
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Set up PNPM
-        uses: pnpm/action-setup@v6
+      - name: Setup pnpm with runtime
+        uses: pnpm/setup@v3
         with:
           cache: true
-
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+          require-lockfile: true
+          runtime: node@${{ matrix.node-version }}
 
       - name: Check code styles
         run: pnpm lint
@@ -105,8 +85,8 @@ jobs:
 
     needs:
       - build
-      - lint
       - type-check
+      - lint
 
     if: ${{ always() && github.event_name == 'pull_request' }}
 
@@ -114,5 +94,5 @@ jobs:
 
     steps:
       - name: Check test matrix status
-        if: ${{ needs.build.result != 'success' || needs.lint.result != 'success' || needs.type-check.result != 'success' }}
+        if: ${{ needs.build.result != 'success' || needs.type-check.result != 'success' || needs.lint.result != 'success' }}
         run: exit 1
